@@ -29,3 +29,7 @@ void Object::move(float delta_time){
         this->frect.y += this->velocity.y * delta_time;
     }
 }
+//================================================================
+SDL_FRect Object::get_rect(){
+    return this->frect;
+}

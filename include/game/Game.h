@@ -11,7 +11,8 @@ public:
     Game(int window_width,int window_height,std::string game_title);   
     bool initialize();                              
     void run_loop();                                
-    void shutdown();                                
+    void shutdown();       
+    bool bound_check(Object&);                         
 private:
     //=====================================
     //helper functions for run_loop
