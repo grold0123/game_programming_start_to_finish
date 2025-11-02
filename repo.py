@@ -1,6 +1,6 @@
 import subprocess
 
-base_dir = 'C:\projects\game_programming_start_to_finish'
+base_dir = r'C:\projects\game_programming_start_to_finish'
 
 args = [
     ('git add:',['git','add',base_dir]),#add
