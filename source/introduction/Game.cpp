@@ -12,7 +12,8 @@
         wall_2(window_width-15,window_height/4.0f,15,200),
         tick_count(0)
     {
-
+        this->ball.movement = BOUNCE;
+        this->ball.velocity = {-200.0f,235.0f};
     }
 
     bool Game::initialize(){    
@@ -101,6 +102,7 @@
         float delta_time = (SDL_GetTicks() - this->tick_count)/ 1000.0f;
         this->tick_count = SDL_GetTicks();
         
+        this->ball.move(delta_time);
         this->wall.move(delta_time);
         this->wall_2.move(delta_time);
     }
