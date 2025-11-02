@@ -8,7 +8,9 @@
         window_height(window_height),
         game_title(game_title),
         ball(window_width/2.0f,window_height/2.0f,15,15),
-        wall(0,window_height/4.0f,15,200)
+        wall(0,window_height/4.0f,15,200),
+        wall_2(window_width-15,window_height/4.0f,15,200),
+        tick_count(0)
     {
 
     }
@@ -65,19 +67,42 @@
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_EVENT_QUIT: this->is_running = false;break;
-                case SDL_EVENT_KEY_DOWN: switch (event.key.key) {
-                    case SDLK_ESCAPE: this->is_running = false; break;
-                    case SDLK_W  : std::cout << "Pressed W Key\n"; break;
-                    case SDLK_A  : std::cout << "Pressed A Key\n"; break;
-                    case SDLK_S  : std::cout << "Pressed S Key\n"; break;
-                    case SDLK_D  : std::cout << "Pressed D Key\n"; break;
-                }
+                case SDL_EVENT_KEY_DOWN: 
+                    switch (event.key.key) {
+                        //=====================================
+                        //close game
+                        case SDLK_ESCAPE: this->is_running = false; break;
+                        //=====================================
+                        //move up
+                        case SDLK_W  : std::cout << "Pressed W Key\n"; this->wall.movement = UP;
+                        case SDLK_UP : std::cout << "Pressed UP key\n"; this->wall_2.movement = UP;break;
+                        //=====================================
+                        //move down
+                        case SDLK_S  : std::cout << "Pressed S Key\n"; this->wall.movement = DOWN;
+                        case SDLK_DOWN : std::cout << "Pressed DOWN key\n"; this->wall_2.movement = DOWN;break;
+                        //=====================================
+                        case SDLK_A  : std::cout << "Pressed A Key\n"; break;                    
+                        case SDLK_D  : std::cout << "Pressed D Key\n"; break;                                                
+                    };
+                    break;                    
+                case SDL_EVENT_KEY_UP : 
+                    switch (event.key.key) {
+                        case SDLK_W :case SDLK_S : this->wall.movement = STILL; break;
+                        case SDLK_UP :case SDLK_DOWN : this->wall_2.movement = STILL; break;
+                    };
+                    break;                                    
             }
         }
     }
 
     void Game::update_game(){
-            
+
+        //delta time , difference in ticks from last 
+        float delta_time = (SDL_GetTicks() - this->tick_count)/ 1000.0f;
+        this->tick_count = SDL_GetTicks();
+        
+        this->wall.move(delta_time);
+        this->wall_2.move(delta_time);
     }
 
     void Game::generate_output(){
@@ -94,6 +119,7 @@
         SDL_RenderClear(this->game_renderer);
         this->ball.draw(game_renderer);
         this->wall.draw(game_renderer);
+        this->wall_2.draw(game_renderer);
         //========================================================================
         SDL_RenderPresent(this->game_renderer);
         //========================================================================

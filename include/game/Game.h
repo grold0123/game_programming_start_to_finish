@@ -26,6 +26,8 @@ private:
     std::string game_title;
     Object ball;
     Object wall;
+    Object wall_2;
+    Uint32 tick_count;
     //=========================================
 };
 //=========================================
