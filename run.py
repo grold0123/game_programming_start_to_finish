@@ -13,7 +13,7 @@ if len(sys.argv) > 1:
         'g++',
         f'{base_dir}/source/{project_name}/*.cpp',
         '-o',
-        f'{source_dir_name}/build/{source_dir_name}.exe'
+        f'{base_dir}/build/{project_name}.exe'
     ]
 
     result = subprocess.run(args)
@@ -24,5 +24,6 @@ if len(sys.argv) > 1:
         print(f'Opening file: {source_dir_name}.exe\n\n')
         time.sleep(.8)
         os.system("cls")
+        subprocess.run([f'{base_dir}/build/{project_name}.exe'])
         
     
